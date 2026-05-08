@@ -6,6 +6,8 @@ import cookieParser from "cookie-parser";
 import connectDB from "./config/mongodb.js";
 import scrapeRoutes from "./routes/scrapeRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import storyRoutes from "./routes/storyRoutes.js";
+
 import { scrapeHackerNews } from "./controllers/scrapeController.js";
 
 dotenv.config();
@@ -22,6 +24,7 @@ app.use(cookieParser());
 
 app.use("/api/scrape", scrapeRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/stories", storyRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
