@@ -112,6 +112,9 @@ The application will be accessible at `http://localhost:5173`.
 ### Health Check
 - `GET /` - Check if API is working
 
+### Scraper
+- `POST /api/scrape` - Trigger manual scrape
+
 ### Auth
 - `POST /api/auth/register` - Register a new user
 - `POST /api/auth/login` - Login user
@@ -121,9 +124,6 @@ The application will be accessible at `http://localhost:5173`.
 - `GET /api/stories/:id` - Fetch single story
 - `POST /api/stories/:id/bookmark` - Toggle bookmark (Auth required)
 - `GET /api/stories/bookmarks` - Fetch user bookmarks (Auth required)
-
-### Scraper
-- `POST /api/scrape` - Trigger manual scrape
 
 ---
 
@@ -155,6 +155,29 @@ You can copy the JSON below and import it into Postman to test the APIs.
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Scraper",
+			"item": [
+				{
+					"name": "Trigger Scrape",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/scrape",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"scrape"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Auth",
@@ -294,29 +317,6 @@ You can copy the JSON below and import it into Postman to test the APIs.
 					"response": []
 				}
 			]
-		},
-		{
-			"name": "Scraper",
-			"item": [
-				{
-					"name": "Trigger Scrape",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/api/scrape",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"api",
-								"scrape"
-							]
-						}
-					},
-					"response": []
-				}
-			]
 		}
 	],
 	"event": [
@@ -348,3 +348,4 @@ You can copy the JSON below and import it into Postman to test the APIs.
 	]
 }
 ```
+
