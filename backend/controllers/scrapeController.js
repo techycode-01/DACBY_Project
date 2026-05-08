@@ -41,7 +41,7 @@ const scrapeHackerNews = async (req, res) => {
       await Story.findOneAndUpdate(
         { url: story.url },
         { $set: story },
-        { upsert: true, new: true },
+        { upsert: true, returnDocument: "after" },
       );
     }
 
