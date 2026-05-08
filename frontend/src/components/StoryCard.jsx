@@ -2,6 +2,54 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { Bookmark } from "lucide-react";
 
+// Convert ISO date to relative time (e.g., '2 hours ago')
+function timeAgo(dateString) {
+  if (!dateString || dateString === "Unknown time") return "Unknown time";
+  
+  // Return if already in relative format
+  if (dateString.includes("ago") || dateString.includes("min")) {
+    return dateString;
+  }
+
+  // Strip trailing numbers (e.g., "date number")
+  const cleanDateString = dateString.split(" ")[0];
+
+  let date = new Date(cleanDateString);
+  
+  // Force UTC parsing if browser defaults to local
+  if (isNaN(date.getTime())) {
+    date = new Date(cleanDateString + "Z");
+  }
+  
+  // If we still can't parse it, just show the original string as a fallback
+  if (isNaN(date.getTime())) return dateString;
+  
+  const now = new Date();
+  const seconds = Math.floor((now - date) / 1000);
+
+  // Handle future dates or slight clock desyncs
+  if (seconds < 0) return "just now";
+  
+  // Break down the difference into appropriate units
+  if (seconds < 60) return `${seconds}s ago`;
+  
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `${minutes}min ago`;
+  
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+  
+  const days = Math.floor(hours / 24);
+  if (days < 30) return `${days} day${days > 1 ? 's' : ''} ago`;
+  
+  const months = Math.floor(days / 30);
+  if (months < 12) return `${months} month${months > 1 ? 's' : ''} ago`;
+  
+  const years = Math.floor(months / 12);
+  return `${years} year${years > 1 ? 's' : ''} ago`;
+}
+
+
 function StoryCard({ story, isBookmarked, onBookmarkToggle }) {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -49,7 +97,7 @@ function StoryCard({ story, isBookmarked, onBookmarkToggle }) {
       </div>
       
       <div className="text-xs text-slate-600 mt-3">
-        {story.postedAt}
+        {timeAgo(story.postedAt)}
       </div>
     </div>
   );
