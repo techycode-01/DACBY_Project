@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import api from "../services/api";
 import StoryCard from "../components/StoryCard";
+import { toast } from "react-hot-toast";
 
 function Bookmarks() {
   const [bookmarks, setBookmarks] = useState([]);
@@ -27,7 +28,9 @@ function Bookmarks() {
       await api.post(`/api/stories/${storyId}/bookmark`);
       // Remove from list since we are on the bookmarks page
       setBookmarks((prev) => prev.filter((story) => story._id !== storyId));
+      toast.success("Bookmark removed!");
     } catch (err) {
+      toast.error("Failed to remove bookmark");
       console.error("Failed to toggle bookmark", err);
     }
   };

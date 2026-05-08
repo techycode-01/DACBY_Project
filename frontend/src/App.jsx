@@ -5,10 +5,12 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Bookmarks from "./pages/Bookmarks";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
     <div className="min-h-screen bg-slate-950 text-white">
+      <Toaster position="top-right" toastOptions={{ style: { background: "#1e293b", color: "#fff" } }} />
       <Navbar />
       <main className="max-w-5xl mx-auto px-6 py-8">
         <Routes>

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import api from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import StoryCard from "../components/StoryCard";
+import { toast } from "react-hot-toast";
 
 function Home() {
   const [stories, setStories] = useState([]);
@@ -45,26 +46,34 @@ function Home() {
 
   const handleBookmarkToggle = async (storyId) => {
     try {
+      const isAdding = !userBookmarks.includes(storyId);
       await api.post(`/api/stories/${storyId}/bookmark`);
+      
       setUserBookmarks((prev) =>
-        prev.includes(storyId)
-          ? prev.filter((id) => id !== storyId)
-          : [...prev, storyId]
+        isAdding
+          ? [...prev, storyId]
+          : prev.filter((id) => id !== storyId)
       );
+      
+      toast.success(isAdding ? "Story bookmarked!" : "Bookmark removed!");
     } catch (err) {
+      toast.error("Failed to update bookmark");
       console.error("Failed to toggle bookmark", err);
     }
   };
 
   const handleScrape = async () => {
     try {
+      toast.loading("Scraping latest stories...", { id: "scrape" });
       await api.post("/api/scrape");
       // Refetch page 1 after scraping
       setPage(1);
       const { data } = await api.get(`/api/stories?page=1&limit=10`);
       setStories(data.stories);
       setTotalPages(data.totalPages);
+      toast.success("Stories updated!", { id: "scrape" });
     } catch (err) {
+      toast.error("Failed to trigger scrape", { id: "scrape" });
       console.error("Failed to trigger scrape", err);
     }
   };
