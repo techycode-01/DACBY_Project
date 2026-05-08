@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
+import Bookmarks from "./pages/Bookmarks";
 
 function App() {
   return (
@@ -13,12 +14,11 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/bookmarks" element={<h1>Bookmarks</h1>} />
+          <Route path="/bookmarks" element={<Bookmarks />} />
         </Routes>
       </main>
     </div>
   );
 }
-
 
 export default App;
