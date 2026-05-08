@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import Home from "./pages/Home";
 
 function App() {
   return (
@@ -9,7 +10,7 @@ function App() {
       <Navbar />
       <main className="max-w-5xl mx-auto px-6 py-8">
         <Routes>
-          <Route path="/" element={<h1>Home</h1>} />
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/bookmarks" element={<h1>Bookmarks</h1>} />
@@ -18,5 +19,6 @@ function App() {
     </div>
   );
 }
+
 
 export default App;
