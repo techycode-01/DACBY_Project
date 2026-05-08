@@ -21,19 +21,25 @@ function Navbar() {
           {user ? (
             <>
               <span className="text-slate-400 text-sm">Hi, {user.name}</span>
-              <Link to="/bookmarks" className="text-slate-300 hover:text-orange-400 text-sm">
+              <Link
+                to="/bookmarks"
+                className="text-slate-300 hover:text-orange-400 text-sm"
+              >
                 Bookmarks
               </Link>
               <button
                 onClick={handleLogout}
-                className="text-sm bg-slate-700 hover:bg-slate-600 text-white px-3 py-1.5 rounded"
+                className="text-sm bg-slate-700 hover:bg-slate-600 text-white px-3 py-1.5 rounded cursor-pointer"
               >
                 Logout
               </button>
             </>
           ) : (
             <>
-              <Link to="/login" className="text-slate-300 hover:text-orange-400 text-sm">
+              <Link
+                to="/login"
+                className="text-slate-300 hover:text-orange-400 text-sm"
+              >
                 Login
               </Link>
               <Link
