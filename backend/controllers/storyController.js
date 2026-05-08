@@ -37,6 +37,27 @@ export const getStoryById = async (req, res) => {
   }
 };
 
+// Get all bookmarked stories for logged in user
+export const getBookmarks = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).populate("bookmarks");
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    res.status(200).json({
+      success: true,
+      count: user.bookmarks.length,
+      bookmarks: user.bookmarks,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, message: "Server error", error: error.message });
+  }
+};
+
 // Toggle bookmark for a story
 export const toggleBookmark = async (req, res) => {
   try {
