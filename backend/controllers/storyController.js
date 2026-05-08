@@ -1,14 +1,27 @@
 import Story from "../models/Story.js";
 import User from "../models/User.js";
 
-// Fetch all stories (sorted by points in descending order)
+// Fetch all stories (sorted by points in descending order) with pagination
 export const getAllStories = async (req, res) => {
   try {
-    const stories = await Story.find().sort({ points: -1 });
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    const totalStories = await Story.countDocuments();
+    const totalPages = Math.ceil(totalStories / limit);
+
+    const stories = await Story.find()
+      .sort({ points: -1 })
+      .skip(skip)
+      .limit(limit);
 
     res.status(200).json({
       success: true,
       count: stories.length,
+      totalStories,
+      totalPages,
+      currentPage: page,
       stories,
     });
   } catch (error) {
