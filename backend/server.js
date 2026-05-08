@@ -18,12 +18,18 @@ const PORT = process.env.PORT || 4500;
 // Connect db
 connectDB();
 
-app.use(cors({
-  origin: process.env.FRONTEND_URL || "http://localhost:5173",
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL || "http://localhost:5173",
+    credentials: true,
+  }),
+);
 app.use(express.json());
 app.use(cookieParser());
+
+app.get("/", (req, res) => {
+  res.status(200).json({ message: "API is working smoothly" });
+});
 
 app.use("/api/scrape", scrapeRoutes);
 app.use("/api/auth", authRoutes);
